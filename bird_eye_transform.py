@@ -22,7 +22,7 @@ def birds_eye_transform(img):
     transformed_points = [[0,0], [300,0], [0,300], [300,300]]
     pts2 = np.float32(transformed_points)
     transformation_matrix = cv2.getPerspectiveTransform(pts1, pts2)
-    transformed = cv2.wrapPerspective(img, transformation_matrix, (300,300))
+    transformed = cv2.warpPerspective(img, transformation_matrix, (300,300))
     cv2.imshow('birds eye view', transformed)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
@@ -32,6 +32,6 @@ if __name__ == "__main__":
     img = cv2.imread('hello.png')
     cv2.imshow('image',img)
     cv2.setMouseCallback('image',click_event)
-    birds_eye_transform(img)
     cv2.waitKey(0)
+    birds_eye_transform(img)
     cv2.destroyAllWindows()
