@@ -1,22 +1,25 @@
+#importing the required modules
 import cv2
 import numpy as np
 import time
 
-net = cv2.dnn.readNet("yolov3.weights", "yolov3.cfg")
+#defining the pretrained yolo model along with weights
+net = cv2.dnn.readNet("/home/siddharthc30/yolov3.weights", "yolov3.cfg") # reading a deep learning network from the given config files
 classes = []
-layer_names =[]
+layer_names =[] # all the layer names of the yolo network
 with open("coco.names", "r") as f:
     classes = [line.strip() for line in f.readlines()]
 layer_names = net.getLayerNames()
-#print(layer_names)
-output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
-colors = np.random.uniform(0, 255, size=(len(classes), 3))
+output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()] #stores all the unconnected output layers
+
+
+#colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
 #load input video stream
 cap = cv2.VideoCapture("/home/siddharthc30/Social_distance_monitoring/test.avi") 
 #instantiate a variable 'p' to keep count of persons
 p = 0  
-#initialize the writer
+#initialize the writer for writing the output video to a file
 writer = None
 (W, H) = (None, None)
 starting_time = time.time()
@@ -72,17 +75,17 @@ while True:
             else:
                 continue
             # draw a bounding box rectangle and label on the frame
-            color = [int(c) for c in colors[class_ids[i]]]
-            cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
-            text = label + ':' + str(p)
-            cv2.putText(frame, text, (x, y+30),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
+            #color = [int(c) for c in colors[class_ids[i]]]
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            #text = label + ':' + str(p)
+            #cv2.putText(frame, text, (x, y+30),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
         if writer is None:
             # initialize our video writer
             fourcc = cv2.VideoWriter_fourcc(*"MJPG")
             writer = cv2.VideoWriter("out.avi", fourcc, 30,(frame.shape[1], frame.shape[0]), True)
-    elapsed_time = time.time() - starting_time
-    fps = frame_id / elapsed_time
-    print(str(round(fps, 2)))
+    #elapsed_time = time.time() - starting_time
+    #fps = frame_id / elapsed_time
+    #print(str(round(fps, 2)))
 
     cv2.imshow("Frame", frame)
     writer.write(frame)
