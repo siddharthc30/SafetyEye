@@ -12,28 +12,24 @@ with open("coco.names", "r") as f:
 layer_names = net.getLayerNames()
 output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()] #stores all the unconnected output layers
 
-
-#colors = np.random.uniform(0, 255, size=(len(classes), 3))
-
 #load input video stream
 cap = cv2.VideoCapture("/home/siddharthc30/Social_distance_monitoring/test.avi") 
-#instantiate a variable 'p' to keep count of persons
-p = 0  
+ 
 #initialize the writer for writing the output video to a file
 writer = None
-(W, H) = (None, None)
-starting_time = time.time()
-frame_id = 0
+(W, H) = (None, None) #height and width of the frames of video
+
 while True:
     ret , frame= cap.read()
-    frame_id += 1
     if W is None or H is None:
         (H, W) = frame.shape[:2]
     # Detecting objects
-    blob = cv2.dnn.blobFromImage(frame, 0.00392, (416, 416), (0, 0, 0), True, crop=False)
-    net.setInput(blob)
-    outs = net.forward(output_layers)
- 
+    blob = cv2.dnn.blobFromImage(frame, 0.00392, (416, 416), (0, 0, 0), True, crop=False) #stroing a blob of preprocessed frames
+    net.setInput(blob) #sets the input to the network as blob
+
+    #run forward pass of the network to compute the outputs of the layers listed in output_layers
+    outs = net.forward(output_layers) #returns 
+    
     # initialize our lists of detected bounding boxes, confidences, and class IDs, respectively
     boxes = []
     confidences = []
@@ -52,9 +48,9 @@ while True:
                 center_y = int(detection[1] * H)
                 w = int(detection[2] * W)
                 h = int(detection[3] * H)
-                # Rectangle coordinates
-                x = int(center_x - w / 2)
-                y = int(center_y - h / 2)
+                # Rectangle coordinates top left
+                x = int(center_x - (w / 2))
+                y = int(center_y - (h / 2))
   
                 # update our list of bounding box coordinates, confidences, and class IDs
                 boxes.append([x, y, w, h])
@@ -71,21 +67,14 @@ while True:
             (w, h) = (boxes[i][2], boxes[i][3])
             label = str(classes[class_ids[i]])
             if label == 'person':
-                p=p+1
+                #p=p+1
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
             else:
                 continue
-            # draw a bounding box rectangle and label on the frame
-            #color = [int(c) for c in colors[class_ids[i]]]
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-            #text = label + ':' + str(p)
-            #cv2.putText(frame, text, (x, y+30),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
         if writer is None:
             # initialize our video writer
             fourcc = cv2.VideoWriter_fourcc(*"MJPG")
-            writer = cv2.VideoWriter("out.avi", fourcc, 30,(frame.shape[1], frame.shape[0]), True)
-    #elapsed_time = time.time() - starting_time
-    #fps = frame_id / elapsed_time
-    #print(str(round(fps, 2)))
+            writer = cv2.VideoWriter("out.avi", fourcc, 30,(frame.shape[1], frame.shape[0]))
 
     cv2.imshow("Frame", frame)
     writer.write(frame)
