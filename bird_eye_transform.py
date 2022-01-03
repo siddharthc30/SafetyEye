@@ -1,6 +1,7 @@
 # importing required modules
 import cv2
 import numpy as np
+import math
 
 #defining function for click event i.e marks a point on image with red
 #where left mouse button is clicked
@@ -48,9 +49,10 @@ def computeParams(img):
 	print(result)
 	one = result[0]
 	two = result[1]
-	diff = one  - two
+	distance = math.sqrt( (one[0] - two[0])**2 + (one[1] - two[1])**2 )
+	#diff = one  - two
 	print('Distance Limit in pixels ')
-	distance = np.sqrt(np.dot(diff.T, diff))
+	#	distance = np.sqrt(np.dot(diff.T, diff))
 	print(distance)
 
 	# transformed.fill(255)

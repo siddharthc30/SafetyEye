@@ -80,13 +80,14 @@ while True:
                 projected.append([[x + w//2, y + h], boxes[i]])
 
                 classify = ComputeDistance(projected, Transformation_matrix, threshold_distance)
+                
                 for bx in classify:
                     box = bx[0][1]
                     (x, y) = (box[0], box[1])
                     (w, h) = (box[2], box[3])
 
                     #If True then Red boxes
-                    if(box[1]):
+                    if(bx[1] == True):
                         cv2.rectangle(frame, (x, y), (x + w, y + h), (0,0,255), 2)
                     else:
                         #Green boxes
