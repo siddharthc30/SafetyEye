@@ -3,7 +3,9 @@ import cv2
 import numpy as np
 import time
 from computeDistance import ComputeDistance
+from bird_eye_transform import calibrate, transform
 
+[Transformation_matrix, transformed_points, threshold_distance, points] = calibrate("/home/siddharthc30/SafetyEye/test.avi")
 
 #defining the pretrained yolo model along with weights
 net = cv2.dnn.readNet("/home/siddharthc30/yolov3.weights", "yolov3.cfg") # reading a deep learning network from the given config files
@@ -69,19 +71,32 @@ while True:
     if len(indexes) > 0:
         # loop over the indexes we are keeping
         for i in indexes.flatten():
-            print(boxes[i])
             # extract the bounding box coordinates
             (x, y) = (boxes[i][0], boxes[i][1])
             (w, h) = (boxes[i][2], boxes[i][3])
             label = str(classes[class_ids[i]])
             if label == 'person':
                 #p=p+1
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-                cv2.circle(frame, ((x + w//2),y + h), radius=2, color=(0, 255, 0), thickness=2)
-                projected.append([[x + w//2, y + h], boxes[i]]) 
+                projected.append([[x + w//2, y + h], boxes[i]])
+
+                classify = ComputeDistance(projected, Transformation_matrix, threshold_distance)
+                for bx in classify:
+                    box = bx[0][1]
+                    (x, y) = (box[0], box[1])
+                    (w, h) = (box[2], box[3])
+
+                    #If True then Red boxes
+                    if(box[1]):
+                        cv2.rectangle(frame, (x, y), (x + w, y + h), (0,0,255), 2)
+                    else:
+                        #Green boxes
+                        cv2.rectangle(frame, (x, y), (x + w, y + h), (0,255,0), 2)
+                
             else:
                 continue
-            
+
+        
+
         if writer is None:
             # initialize our video writer
             fourcc = cv2.VideoWriter_fourcc(*"MJPG")
