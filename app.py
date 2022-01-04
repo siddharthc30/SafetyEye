@@ -2,10 +2,16 @@
 import cv2
 import numpy as np
 import time
+import argparse
 from computeDistance import ComputeDistance
 from bird_eye_transform import calibrate, transform
 
-[Transformation_matrix, transformed_points, threshold_distance, points] = calibrate("/home/siddharthc30/SafetyEye/test.avi")
+parser = argparse.ArgumentParser()
+parser.add_argument('--path', help = 'Enter the path of Video', required = True)
+args = parser.parse_args()
+path = args.path
+
+[Transformation_matrix, transformed_points, threshold_distance, points] = calibrate(path)
 
 #defining the pretrained yolo model along with weights
 net = cv2.dnn.readNet("/home/siddharthc30/yolov3.weights", "yolov3.cfg") # reading a deep learning network from the given config files
@@ -17,7 +23,7 @@ layer_names = net.getLayerNames()
 output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()] #stores all the unconnected output layers
 
 #load input video stream
-cap = cv2.VideoCapture("/home/siddharthc30/SafetyEye/test.avi") 
+cap = cv2.VideoCapture(path) 
  
 #initialize the writer for writing the output video to a file
 writer = None

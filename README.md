@@ -1,6 +1,6 @@
 # SafetyEye
 
-A computer vision based object detection application that helps to monitor and detect social distancing in public places.
+A computer vision based object detection command line application that helps to monitor and detect social distancing in public places.
 
 
 ## Summary of Contents
@@ -22,6 +22,7 @@ A computer vision based object detection application that helps to monitor and d
       </ul>
     </li>
     <li><a href="#example">Example</a></li>
+    <li><a href="#results">Results</a></li>
     <li><a href="#new">New!</a></li>
     <li><a href="#coming-up">Coming up</a></li>
     
@@ -33,7 +34,7 @@ A computer vision based object detection application that helps to monitor and d
 ### Built With
 1. Python3
 2. Opencv
-3. cv2's DNN module
+3. cv2's DNN Library
 
 ## Problem Addressed
 
@@ -41,7 +42,7 @@ A computer vision based object detection application that helps to monitor and d
 ## Getting Started
 ### Prerequisites
 To install the required prerequisite modules, just run
-``` pip install requirements.txt```
+``` pip install -r requirements.txt```
 <br>
 Next, download the weights of yolov3 network from [here](href="https://pjreddie.com/media/files/yolov3.weights) and copy-paste the file into this cloned directory
 
@@ -49,15 +50,24 @@ Next, download the weights of yolov3 network from [here](href="https://pjreddie.
 ### Run it
 After all the required files and modules are downloaded. Run the command 
 <br>
-```python3 app.py```
+```python3 app.py --path (path of the test video in double quotes)```
+<br>
+<br>
+For example, ```python3 app.py --path "home/videos/testvideo.avi" ```
 <br>
 - Then a pop-up with the first frame of the test video appears.
-- Here, you have to select four dots on the frame such that when a pair of two dots is connected to from a line, then atleast two lines have to be parallel, i.e when four points are connected, they have to be a trapezium or a parallelogram or atleast a rectangle.
+- Here, you have to select four dots on the frame such that they form a rectangle.
+- **Order of plotting points is important, and the order is, top-left, top-right, bottom-left adn bottom-right**
 - Later, you have to select two dots along a straight line (preferable), to find out the minimum distance to be maintained by the people in the video. 
 
 All these steps are demonstrated below in Example section
 
 ## Example
+Here is a demo on how to run the application,
+
+## Results
+This is the output of the application after running it on the sample video that is already in this repository.
+
 
 ## New!
 This application has an inbuilt camera caliberation function, using which we can set the minimum distance between people in the video to classify them whether they are socially distanced or not. This application also has a perspective tranformation of the people so that the distance between people will be independent of the orientation of camera.
