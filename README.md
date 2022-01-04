@@ -70,6 +70,9 @@ This is the output of the application after running it on the sample video that 
 <br>
 ![output](https://user-images.githubusercontent.com/53928899/148102127-7563d0c8-64ef-4c2f-817f-122cc6c3049d.gif)
 <br>
+<br>
+Here, people bounded by green boxes are maintaining social distancing according to the threshold distance given by the user and the ones bounded by red boxes are not.
+<br>
 P.S: The complete output video is in file out.avi
 
 ## New!
