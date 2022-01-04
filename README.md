@@ -67,7 +67,10 @@ Here is a demo on how to run the application,
 
 ## Results
 This is the output of the application after running it on the sample video that is already in this repository.
-
+<br>
+![output](https://user-images.githubusercontent.com/53928899/148102127-7563d0c8-64ef-4c2f-817f-122cc6c3049d.gif)
+<br>
+P.S: The complete output video is in file out.avi
 
 ## New!
 This application has an inbuilt camera caliberation function, using which we can set the minimum distance between people in the video to classify them whether they are socially distanced or not. This application also has a perspective tranformation of the people so that the distance between people will be independent of the orientation of camera.
