@@ -30,6 +30,8 @@ A computer vision based object detection command line application that helps to 
 </details>
 
 ## About The Project
+During the pandemic, there were guidelines passed by local government bodies that were to be followed on a personal basis in order to reduce the rise in COVID-19 cases, one of them was following social distancing in public places. Following social distancing is a difficult task for us, as it is something new to us and we have to be constantly monitored so that we follow this rule and reduce the risk of contracting the virus. If there were people appointed to monitor social distancing from the field, this job becomes not only tedious but also would put the respective person at risk of contracting the virus. In order to overcome this problem, we can automate this task and SafetyEye comes right into action. SafetyEye is a command-line application that detects and monitors social distancing using a state-of-the-art object detection model that is tuned to recognize human beings. When CCTV footage of a public place is fed to the application, it outputs a video with a graphical representation of people following social distancing or not. This helps in a way that a person can sit inside a cabin remotely and take a look into the situation for any further action. 
+
 
 ### Built With
 1. Python3
@@ -37,7 +39,7 @@ A computer vision based object detection command line application that helps to 
 3. cv2's DNN Library
 
 ## Problem Addressed
-
+Automation of social distance detection and monitoring.
 
 ## Getting Started
 ### Prerequisites
@@ -57,7 +59,7 @@ For example, ```python3 app.py --path "home/videos/testvideo.avi" ```
 <br>
 - Then a pop-up with the first frame of the test video appears.
 - Here, you have to select four dots on the frame such that they form a rectangle.
-- **Order of plotting points is important, and the order is, top-left, top-right, bottom-left adn bottom-right**
+- **Order of plotting points is important, and the order is, top-left, top-right, bottom-left and bottom-right**
 - Later, you have to select two dots along a straight line (preferable), to find out the minimum distance to be maintained by the people in the video. 
 
 All these steps are demonstrated below in Example section
