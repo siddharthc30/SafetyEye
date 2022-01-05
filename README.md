@@ -47,6 +47,10 @@ To install the required prerequisite modules, just run
 ``` pip install -r requirements.txt```
 <br>
 Next, download the weights of yolov3 network from [here](href="https://pjreddie.com/media/files/yolov3.weights) and copy-paste the file into this cloned directory
+<br>
+After downloading the weights, go to file app.py and line 17 and change the path of the weights file.
+<br>
+```net = cv2.dnn.readNet("<path of weights file>", "yolov3.cfg")```
 
 
 ### Run it
@@ -58,14 +62,15 @@ After all the required files and modules are downloaded. Run the command
 For example, ```python3 app.py --path "home/videos/testvideo.avi" ```
 <br>
 - Then a pop-up with the first frame of the test video appears.
-- Here, you have to select four dots on the frame such that they form a rectangle.
+- Here, you have to select first four dots that will appear in red on the frame such that they form a rectangle.
 - **Order of plotting points is important, and the order is, top-left, top-right, bottom-left and bottom-right**
-- Later, you have to select two dots along a straight line (preferable), to find out the minimum distance to be maintained by the people in the video. 
+- Later, you have to select two dots that appear in blue along a straight line (preferable), to find out the minimum distance to be maintained by the people in the video. And then press enter. 
 
 All these steps are demonstrated below in Example section
 
 ## Example
 Here is a demo on how to run the application,
+![demo](https://user-images.githubusercontent.com/53928899/148266684-701445a0-b87c-4faf-822b-94b9abbcac93.gif)
 
 ## Results
 This is the output of the application after running it on the sample video that is already in this repository.
