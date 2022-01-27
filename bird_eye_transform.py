@@ -5,28 +5,30 @@ import math
 
 #defining function for click event i.e marks a point on image with red
 #where left mouse button is clicked
-points =[] #reference points for transformation
-coor = [] #reference points to calculate distance and classify 
 
-Click_number = 0 #number of clicks
+points =[] #reference points for transformation
+coor = [] #reference points to calculate distance and classify
+
+#number of clicks
+Click_number = 0 
 img = None
 
+
 def click_event(event, x, y, flags, params):
-	
-	
 	if event == cv2.EVENT_LBUTTONDOWN:
 		global Click_number
 		global img
+
 		if(Click_number < 4):
 			print('Perspective Click ')
 			print(x, ',', y) #prints out the point for reference
 			points.append([x,y])
 			center = (x, y) #center of the dot i.e the point itself
 			radius = 1 #radius of the dot
+
 			cv2.circle(img, center, radius,(0,0,255), 5) #draws the dot on the image
 			cv2.imshow('image', img)
 		
-		#gives the distance after transformation
 		else:
 			print('Click for disance reference points')
 			print(x, ',', y) #prints out the point for reference
@@ -47,26 +49,22 @@ def computeParams(img):
 	distV = np.float32(coor)
 	result = transform(coor, transformation_matrix)
 	print(result)
+
 	one = result[0]
 	two = result[1]
-	distance = math.sqrt( (one[0] - two[0])**2 + (one[1] - two[1])**2 )
-	#diff = one  - two
-	print('Distance Limit in pixels ')
-	#	distance = np.sqrt(np.dot(diff.T, diff))
-	print(distance)
 
-	# transformed.fill(255)
-	# cv2.circle(transformed, (int(one[0]), int(one[1])), 1,(0,255,0), 5)
-	# cv2.circle(transformed, (int(two[0]), int(two[1])), 1,(0,255,0), 5)
-	# cv2.imshow('bird', transformed)
-	# cv2.waitKey(0)
+	distance = math.sqrt( (one[0] - two[0])**2 + (one[1] - two[1])**2 )#diff = one  - two
+	print('Distance Limit in pixels ')
+	print(distance)
 	return [transformation_matrix, transformed, distance, points]
+
 
 def transform(points, M):
 	points = np.float32(points)
 	result = cv2.perspectiveTransform(points[None, :, :], M)
 	print(result.shape)
 	ret = []
+	
 	for i in range(0,result.shape[1]):
 		ret.append(result[0][i])
 	return ret
